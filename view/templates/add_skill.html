@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Adicionar Skill
+{% endblock %}
+
+{% block content %}
+    <form action="add_skill" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" name="name" id="name" required>
+        
+        <label for="level">Nível:</label>
+        <input type="number" name="level" id="level" required>
+        
+        <button type="submit">Adicionar Skill</button>
+    </form>
+{% endblock %}

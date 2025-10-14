@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="contact" method="post">
+{% extends 'layout.html' %}
+
+{% block title %}
+    Cadastre-se!
+{% endblock %}
+
+{% block content %}
+    <form action="register" method="post">
         <label for="name">Nome:</label>
         <input type="text" name="name" id="name" required>
         
@@ -15,5 +14,4 @@
         
         <button type="submit">Cadastrar</button>
     </form>
-</body>
-</html>
+{% endblock %}

@@ -10,5 +10,3 @@ class Role(db.Model):
 
     # relação com a outra tabela de skills
     skills = db.relationship('Skill', secondary=role_skills, back_populates='roles')
-    
-
