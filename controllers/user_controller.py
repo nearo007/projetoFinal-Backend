@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, Blueprint
 from models import db
 from models.user import User
 from models.skill import Skill
+from models.role import Role
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -9,8 +10,9 @@ user_bp = Blueprint('user_bp', __name__)
 def index():
     users = User.query.all()
     skills = Skill.query.all()
-    
-    return render_template("index.html", users=users, skills=skills)
+    roles = Role.query.all()
+
+    return render_template("index.html", users=users, skills=skills, roles=roles)
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
