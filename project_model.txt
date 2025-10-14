@@ -1,0 +1,12 @@
+CRUD
+login (não conta)
+
+sala
+alunos
+atividade avaliativa
+
+API
+pode ser obter um json
+
+REMEMBER PASSWORD
+pode ser com localStorage()
