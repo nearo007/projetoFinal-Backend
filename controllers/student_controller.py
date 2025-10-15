@@ -11,8 +11,8 @@ def manage_students():
     students = Student.query.all()
     return render_template("student/manage_students.html", students=students)
 
-@student_bp.route('/add_student', methods=['GET', 'POST'])
-def add_student():
+@student_bp.route('/create_student', methods=['GET', 'POST'])
+def create_student():
     if request.method == 'POST':
         name = request.form['name']
         born_date_string = request.form['born_date']
@@ -24,7 +24,7 @@ def add_student():
 
         return redirect(url_for("student_bp.manage_students"))
 
-    return render_template("student/add_student.html")
+    return render_template("student/create_student.html")
     
 @student_bp.route('/remove_student/<int:student_id>', methods=['GET'])
 def remove_student(student_id):

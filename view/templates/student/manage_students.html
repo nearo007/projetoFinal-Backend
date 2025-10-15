@@ -7,7 +7,7 @@
 {% block content %}
   <h1 class="text-center mb-4">Lista de Estudantes</h1>
 
-  <a href="{{ url_for('student_bp.add_student') }}"><button>Adicionar Estudante</button></a>
+  <a href="{{ url_for('student_bp.create_student') }}"><button>Adicionar Estudante</button></a>
   {% if students %}
     <div class="table-responsive">
       <table class="table table-hover table-bordered align-middle shadow-sm bg-white">
