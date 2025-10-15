@@ -6,8 +6,12 @@ from datetime import datetime
 
 assignment_bp = Blueprint('assignment_bp', __name__)
 
-@assignment_bp.route('/add_assignment', methods=['GET', 'POST'])
-def add_assignment():
+@assignment_bp.route('/manage_assignments', methods=['GET', 'POST'])
+def manage_assignments():
+    pass
+
+@assignment_bp.route('/create_assignments', methods=['GET', 'POST'])
+def create_assignments():
     if request.method == 'POST':
         name = request.form['name']
         grade_worth = request.form['grade_worth']
@@ -23,4 +27,4 @@ def add_assignment():
 
         return redirect("/")
 
-    return render_template("assignment/add_assignment.html")
+    return render_template("assignment/create_assignments.html")
