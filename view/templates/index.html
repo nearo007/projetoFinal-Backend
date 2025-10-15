@@ -84,5 +84,34 @@
     {% else %}
       <div class="alert alert-warning text-center shadow-sm">Nenhum classe cadastrado ainda.</div>
     {% endif %}
+
+    <h1 class="text-center mb-4">Lista de Atividades</h1>
+
+    {% if users %}
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle shadow-sm bg-white">
+          <thead class="table-primary text-center">
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Valor</th>
+              <th>Data de Entrega</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for assignment in assignments %}
+              <tr>
+                <td class="text-center">{{ assignment.id }}</td>
+                <td>{{ assignment.name }}</td>
+                <td>{{ assignment.grade_worth }}</td>
+                <td>{{ assignment.due_date }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="alert alert-warning text-center shadow-sm">Nenhuma Atividade cadastrada ainda.</div>
+    {% endif %}
   </main>
 {% endblock %}

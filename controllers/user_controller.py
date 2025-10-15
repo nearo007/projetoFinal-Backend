@@ -3,6 +3,7 @@ from models import db
 from models.user import User
 from models.student import Student
 from models.classroom import Classroom
+from models.assignments import Assignment
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -11,8 +12,9 @@ def index():
     users = User.query.all()
     students = Student.query.all()
     classrooms = Classroom.query.all()
+    assignments = Assignment.query.all()
 
-    return render_template("index.html", users=users, students=students, classrooms=classrooms)
+    return render_template("index.html", users=users, students=students, classrooms=classrooms, assignments=assignments)
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
