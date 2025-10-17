@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash
-from database import db
+from extensions import db
 from models import Student, Classroom, Assignment
 from datetime import datetime
 

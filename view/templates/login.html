@@ -1,20 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Cadastre-se!
+    Entrar!
 {% endblock %}
 
 {% block content %}
-    <form action="register" method="post">
+    <form action="login" method="post">
         <label for="name">Nome:</label>
         <input type="text" name="name" id="name" required>
-        
-        <label for="email">Email:</label>
-        <input type="text" name="email" id="email" required>
 
         <label for="password">Senha:</label>
         <input type="password" name="password" id="password", required>
         
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Entrar</button>
     </form>
 {% endblock %}

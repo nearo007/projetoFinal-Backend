@@ -2,5 +2,9 @@
   {
     "type": "sqlite",
     "path": "c:\\Users\\arauj\\Desktop\\VS_code\\ABOMINAVEL\\MVC_fr\\instance\\skillsDB.db"
+  },
+  {
+    "type": "sqlite",
+    "path": "c:\\Users\\arauj\\Desktop\\VS_code\\ABOMINAVEL\\MVC_fr\\instance\\studentsDB.db"
   }
 ]
