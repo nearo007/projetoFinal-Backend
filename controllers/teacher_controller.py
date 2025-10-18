@@ -9,6 +9,9 @@ teacher_bp = Blueprint('teacher_bp', __name__)
 @teacher_bp.route('/manage_students', methods=['GET'])
 def manage_students():
     students = Student.query.all()
+    for student in students:
+        student.born_date = student.born_date.strftime("%d/%m/%Y")
+
     return render_template("student/manage_students.html", students=students)
 
 @teacher_bp.route('/create_student', methods=['GET', 'POST'])
