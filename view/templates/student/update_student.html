@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Adicionar Estudante
+{% endblock %}
+
+{% block content %}
+    <form action="update_student" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" name="name" id="name" required>
+        
+        <label for="born_date">Data de Nascimento:</label>
+        <input type="date" name="born_date" id="born_date" required>
+        
+        <button type="submit">Adicionar Estudante</button>
+    </form>
+{% endblock %}

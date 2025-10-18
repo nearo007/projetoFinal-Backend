@@ -35,7 +35,7 @@
               </td>
 
               <td class="text-center">
-                <a href="{{ url_for('teacher_bp.remove_student', student_id=student.id) }}"
+                <a href="{{ url_for('teacher_bp.delete_student', student_id=student.id) }}"
                 onclick="return confirm('Tem certeza que deseja remover {{ student.name }}? Esta ação não pode ser desfeita.');"
                 class="fw-bold">
                     <i class="bi bi-trash"></i>

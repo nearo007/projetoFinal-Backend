@@ -26,8 +26,8 @@ def create_student():
 
     return render_template("student/create_student.html")
     
-@teacher_bp.route('/remove_student/<int:student_id>', methods=['GET'])
-def remove_student(student_id):
+@teacher_bp.route('/delete_student/<int:student_id>', methods=['GET'])
+def delete_student(student_id):
     student = Student.query.get(student_id)
     
     if not student:
