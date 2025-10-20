@@ -32,10 +32,10 @@
             <tr>
               <td class="text-center">{{ assignment.id }}</td>
               <td>{{ assignment.name }}</td>
-              <td>{{ assignment.due_date }}</td>
               <td class="text-center">{{ assignment.grade_worth }}</td>
+              <td>{{ assignment.due_date }}</td>
               <td class="text-center">
-                <a href="" 
+                <a href="{{ url_for('teacher_bp.update_assignment', assignment_id=assignment.id)}}" 
                    class="text-primary" title="Editar">
                   <i class="bi bi-pencil-fill"></i>
                 </a>

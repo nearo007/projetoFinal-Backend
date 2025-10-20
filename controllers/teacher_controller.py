@@ -159,4 +159,27 @@ def delete_assignment(assignment_id):
 
     return redirect(url_for("teacher_bp.manage_assignments"))
 
-# @teacher_bp.route("/update_student")
+@teacher_bp.route("/update_assignment/<int:assignment_id>", methods=['GET', 'POST'])
+def update_assignment(assignment_id):
+    assignment = Assignment.query.get(assignment_id)
+
+    if not assignment:
+        flash("Algo deu errado.", "warning")
+
+    if request.method == 'POST':
+        assignment_name = request.form['name']
+        assignment_grade_worth = request.form['grade_worth']
+        
+        assignment_due_date_string = request.form['due_date']
+        assignment_due_date = datetime.strptime(assignment_due_date_string, '%Y-%m-%d').date()
+
+        assignment.name = assignment_name
+        assignment.grade_worth = assignment_grade_worth
+        assignment.due_date = assignment_due_date
+
+        db.session.commit()
+        flash("Tarefa atualizada com sucesso!", "success")
+        return redirect(url_for("teacher_bp.manage_assignments"))
+    
+    assignment_due_date = assignment.due_date.strftime('%Y-%m-%d')   
+    return render_template("assignment/update_assignment.html", assignment=assignment, assignment_due_date=assignment_due_date)
