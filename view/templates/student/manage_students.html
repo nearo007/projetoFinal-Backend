@@ -33,7 +33,7 @@
               <td class="text-center">{{ student.id }}</td>
               <td>{{ student.name }}</td>
               <td class="text-center">{{ student.born_date }}</td>
-              <td class="text-center">{{ student.classroom_id }}</td>
+              <td class="text-center">{{ student.classroom.name }}</td>
               <td class="text-center">
                 <a href="{{ url_for('teacher_bp.update_student', student_id=student.id) }}" 
                    class="text-primary" title="Editar">
