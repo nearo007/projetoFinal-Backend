@@ -5,10 +5,7 @@ class Classroom(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
-    
-
-    # relação com a outra tabela de skills
-    #skills = db.relationship('Skill', secondary=role_skills, back_populates='roles')
+    students = db.relationship('Student', backref='classroom', lazy=True)
 
 class Student(db.Model):
     __tablename__ = 'students'
@@ -16,9 +13,8 @@ class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     born_date = db.Column(db.DateTime, nullable=False)
-    #classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'), nullable=False)
+    classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'), nullable=False)
 
-    #classroom = db.relationship('Classroom', backref='classrooms')
 
 class Assignment(db.Model):
     __tablename__ = 'assignments'

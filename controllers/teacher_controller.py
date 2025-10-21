@@ -20,14 +20,16 @@ def create_student():
         name = request.form['name']
         born_date_string = request.form['born_date']
         born_date = datetime.strptime(born_date_string, '%Y-%m-%d').date()
+        classroom_id = request.form['classroom_id']
 
-        new_student = Student(name=name, born_date=born_date)
+        new_student = Student(name=name, born_date=born_date, classroom_id=classroom_id)
         db.session.add(new_student)
         db.session.commit()
 
         return redirect(url_for("teacher_bp.manage_students"))
 
-    return render_template("student/create_student.html")
+    classrooms = Classroom.query.all()
+    return render_template("student/create_student.html", classrooms=classrooms)
     
 @teacher_bp.route('/delete_student/<int:student_id>', methods=['GET'])
 def delete_student(student_id):
