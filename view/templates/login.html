@@ -15,6 +15,22 @@
     </div>
 
     <form action="{{ url_for('user_bp.login') }}" method="post">
+      <div class="mb-4 text-center">
+        <label class="form-label fw-semibold d-block mb-2">Tipo de Usuário</label>
+
+        <div class="btn-group w-100" role="group" aria-label="Tipo de Usuário">
+          <input type="radio" class="btn-check" name="role" id="role-student" value="student" autocomplete="off" checked>
+          <label class="btn btn-outline-success fw-semibold" for="role-student">Estudante</label>
+
+          <input type="radio" class="btn-check" name="role" id="role-teacher" value="teacher" autocomplete="off">
+          <label class="btn btn-outline-primary fw-semibold" for="role-teacher">Professor</label>
+
+          <input type="radio" class="btn-check" name="role" id="role-admin" value="admin" autocomplete="off">
+          <label class="btn btn-outline-danger fw-semibold" for="role-admin">Administrador</label>
+        </div>
+      </div>
+
+
       <div class="mb-3">
         <label for="name" class="form-label fw-semibold">Nome</label>
         <input type="text" name="name" id="name" class="form-control" placeholder="Digite seu nome" required>
@@ -23,6 +39,11 @@
       <div class="mb-3">
         <label for="password" class="form-label fw-semibold">Senha</label>
         <input type="password" name="password" id="password" class="form-control" placeholder="Digite sua senha" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="verify-code" class="form-label fw-semibold">Código Código <span class="text-muted small">(Professor ou Administrador)</span></label>
+        <input type="number" name="verify_code" id="verify-code" class="form-control" placeholder="Digite o código de verificação para registro">
       </div>
 
       <div class="d-grid mt-4">
