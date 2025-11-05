@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash
 from extensions import db
-from models import Student, Classroom, Assignment
+from models import Student, Classroom, Assignment, User
 from datetime import datetime
 
 teacher_bp = Blueprint('teacher_bp', __name__)
@@ -81,14 +81,22 @@ def manage_classrooms():
 def create_classroom():
     if request.method == 'POST':
         name = request.form['name']
+        teacher_ids = request.form.getlist('teachers') # [0, 1, 2] (ids)
 
         new_classroom = Classroom(name=name)
         db.session.add(new_classroom)
         db.session.commit()
+        
+        for teacher_id in teacher_ids:
+            teacher = User.query.get(teacher_id)
+            new_classroom.teachers.append(teacher)
+        
+        db.session.commit()
 
         return redirect(url_for("teacher_bp.manage_classrooms"))
 
-    return render_template("classroom/create_classroom.html")
+    teachers = User.query.filter_by(role='teacher').all()
+    return render_template("classroom/create_classroom.html", teachers=teachers)
 
 @teacher_bp.route("/delete_classroom/<int:classroom_id>", methods=['GET'])
 def delete_classroom(classroom_id):

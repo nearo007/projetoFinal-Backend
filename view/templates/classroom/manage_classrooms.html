@@ -20,9 +20,10 @@
         <thead class="table-primary text-center">
           <tr>
             <th style="width: 10%">ID</th>
-            <th style="width: 60%">Nome</th>
-            <th style="width: 15%">Editar</th>
-            <th style="width: 15%">Remover</th>
+            <th style="width: 30%">Nome</th>
+            <th style="width: 40%">Professores</th>
+            <th style="width: 10%">Editar</th>
+            <th style="width: 10%">Remover</th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +31,13 @@
             <tr>
               <td class="text-center">{{ classroom.id }}</td>
               <td>{{ classroom.name }}</td>
+
+              <td>
+                {% for teacher in classroom.teachers %}
+                  {{ teacher.name }}
+                {% endfor %}
+              </td>
+
               <td class="text-center">
                 <a href="{{ url_for('teacher_bp.update_classroom', classroom_id=classroom.id)}}"
                    class="text-primary" title="Editar">
