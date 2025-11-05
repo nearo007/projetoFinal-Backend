@@ -1,1 +1,3 @@
 .env
+.devdbrc
+__pycache__/
