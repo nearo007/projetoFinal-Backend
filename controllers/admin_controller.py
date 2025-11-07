@@ -2,11 +2,13 @@ from flask import render_template, request, redirect, url_for, Blueprint, flash
 from extensions import db
 from models import Student, Classroom, Assignment, User
 from datetime import datetime
+from utils.decorators import role_required
 
 admin_bp = Blueprint('admin_bp', __name__)
 
 # student
 @admin_bp.route('/manage_students', methods=['GET'])
+@role_required('admin')
 def manage_students():
     students = Student.query.all()
     classrooms = Classroom.query.all()
@@ -17,6 +19,7 @@ def manage_students():
     return render_template("student/manage_students.html", students=students, classrooms=classrooms)
 
 @admin_bp.route('/create_student', methods=['GET', 'POST'])
+@role_required('admin')
 def create_student():
     if request.method == 'POST':
         name = request.form['name']
@@ -34,6 +37,7 @@ def create_student():
     return render_template("student/create_student.html", classrooms=classrooms)
     
 @admin_bp.route('/delete_student/<int:student_id>', methods=['GET'])
+@role_required('admin')
 def delete_student(student_id):
     student = Student.query.get(student_id)
     
@@ -48,6 +52,7 @@ def delete_student(student_id):
     return redirect(url_for("admin_bp.manage_students"))
 
 @admin_bp.route('/update_student/<int:student_id>', methods=['GET', 'POST'])
+@role_required('admin')
 def update_student(student_id):
     student = Student.query.get(student_id)
     
@@ -72,12 +77,14 @@ def update_student(student_id):
 
 # classroom
 @admin_bp.route('/manage_classrooms', methods=['GET'])
+@role_required('admin')
 def manage_classrooms():
     classrooms = Classroom.query.all()
 
     return render_template("classroom/manage_classrooms.html", classrooms=classrooms)
 
 @admin_bp.route('/create_classroom', methods=['GET', 'POST'])
+@role_required('admin')
 def create_classroom():
     if request.method == 'POST':
         name = request.form['name']
@@ -99,6 +106,7 @@ def create_classroom():
     return render_template("classroom/create_classroom.html", teachers=teachers)
 
 @admin_bp.route("/delete_classroom/<int:classroom_id>", methods=['GET'])
+@role_required('admin')
 def delete_classroom(classroom_id):
     classroom = Classroom.query.get(classroom_id)
 
@@ -113,6 +121,7 @@ def delete_classroom(classroom_id):
     return redirect(url_for("admin_bp.manage_classrooms"))
 
 @admin_bp.route('/update_classroom/<int:classroom_id>', methods=['GET', 'POST'])
+@role_required('admin')
 def update_classroom(classroom_id):
     classroom = Classroom.query.get(classroom_id)
     
