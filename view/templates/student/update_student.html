@@ -27,6 +27,20 @@
                 <input value="{{ student_born_date }}" type="date" class="form-control" name="born_date" id="born_date" required />
               </div>
 
+              <div class="mb-3">
+                <label for="classroom_id" class="form-label">Turma</label>
+                <select class="form-select" name="classroom_id" id="classroom_id" required>
+                  <option value="">Selecione a turma</option>
+                  {% for classroom in classrooms %}
+                    {% if classroom == student.classroom %}
+                      <option selected value="{{ classroom.id }}">{{ classroom.name }}</option>
+                    {% else %}
+                      <option value="{{ classroom.id }}">{{ classroom.name }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+
               <div class="d-flex justify-content-between">
                 <a href="{{ url_for('admin_bp.manage_students') }}" class="btn btn-outline-secondary">Voltar</a>
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>

@@ -62,17 +62,21 @@ def update_student(student_id):
         student_email= request.form['email']
         student_born_date_string = request.form['born_date']
         student_born_date = datetime.strptime(student_born_date_string, '%Y-%m-%d').date()
+        student_classroom_id = request.form['classroom_id']
+        student_classroom = Classroom.query.get(student_classroom_id)
 
         student.name = student_name
         student.email = student_email
         student.born_date = student_born_date
+        student.classroom = student_classroom
 
         db.session.commit()
         flash("Aluno atualizado com sucesso!", "success")
         return redirect(url_for("admin_bp.manage_students"))
         
     student_born_date = student.born_date.strftime("%Y-%m-%d")
-    return render_template("student/update_student.html", student=student, student_born_date=student_born_date)
+    classrooms = Classroom.query.all()
+    return render_template("student/update_student.html", student=student, student_born_date=student_born_date, classrooms=classrooms)
 
 # classroom
 @admin_bp.route('/manage_classrooms', methods=['GET'])
