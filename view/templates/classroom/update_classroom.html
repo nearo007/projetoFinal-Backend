@@ -1,32 +1,42 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Editar Turma
+  Editar Turma
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-sm border-0">
-        <div class="card-body">
-          <h3 class="card-title text-center mb-4 fw-bold text-primary">Editar Turma</h3>
-          <form action="{{ url_for('admin_bp.update_classroom', classroom_id=classroom.id) }}" method="post">
-            
-            <div class="mb-3">
-              <label for="name" class="form-label">Nome</label>
-              <input value="{{ classroom.name }}" type="text" class="form-control" name="name" id="name" required>
-            </div>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h3 class="card-title text-center mb-4 fw-bold text-primary">Editar Turma</h3>
+            <form action="{{ url_for('admin_bp.update_classroom', classroom_id=classroom.id) }}" method="post">
+              <div class="mb-3">
+                <label for="name" class="form-label">Nome</label>
+                <input value="{{ classroom.name }}" type="text" class="form-control" name="name" id="name" required />
+              </div>
 
-            <div class="d-flex justify-content-between">
-              <a href="{{ url_for('admin_bp.manage_classrooms') }}" class="btn btn-outline-secondary">Voltar</a>
-              <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-            </div>
+              <div class="mb-3">
+                <label for="teachers" class="form-label">Professores</label>
+                <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+                  {% for teacher in teachers %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="teachers" value="{{ teacher.id }}" id="teacher{{ teacher.id }}" {% if teacher in classroom.teachers %}checked{% endif %} />
+                      <label class="form-check-label" for="teacher{{ teacher.id }}">{{ teacher.name }}</label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
 
-          </form>
+              <div class="d-flex justify-content-between">
+                <a href="{{ url_for('admin_bp.manage_classrooms') }}" class="btn btn-outline-secondary">Voltar</a>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 {% endblock %}

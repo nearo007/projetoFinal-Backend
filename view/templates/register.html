@@ -43,7 +43,7 @@
 
         <div class="mb-3">
           <label for="verify-code" class="form-label fw-semibold">Código de Verificação</span></label>
-          <input type="text" name="verify_code" id="verify-code" class="form-control" placeholder="Digite o código de verificação para registro" />
+          <input type="password" name="verify_code" id="verify-code" class="form-control" placeholder="Digite o código de verificação para registro" />
         </div>
 
         {% for category, message in get_flashed_messages(with_categories=true) %}

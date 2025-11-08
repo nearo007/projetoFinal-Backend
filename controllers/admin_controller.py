@@ -128,11 +128,18 @@ def update_classroom(classroom_id):
     
     if request.method == 'POST':
         classroom_name = request.form['name']
-        
+        teacher_ids = request.form.getlist('teachers') # [0, 1, 2] (ids)
+
         classroom.name = classroom_name
+        
+        classroom.teachers.clear()
+        for teacher_id in teacher_ids:
+            teacher = User.query.get(teacher_id)
+            classroom.teachers.append(teacher)
 
         db.session.commit()
         flash("Turma atualizada com sucesso!", "success")
         return redirect(url_for("admin_bp.manage_classrooms"))
-        
-    return render_template("classroom/update_classroom.html", classroom=classroom)
+    
+    teachers = User.query.filter_by(role='teacher').all()
+    return render_template("classroom/update_classroom.html", classroom=classroom, teachers=teachers)

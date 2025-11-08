@@ -18,3 +18,5 @@ adicionar verificação data de entrega
 adicionar lembrar senha (pode ser com localStorage())
 
 adicionar API (pode ser obter um json)
+
+remover flash desnecessários que stackam na tela de login
