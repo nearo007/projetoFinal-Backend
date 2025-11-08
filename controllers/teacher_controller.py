@@ -50,6 +50,7 @@ def update_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
 
     if not assignment:
+        return redirect(url_for("teacher_bp.manage_assignments"))
 
     if request.method == 'POST':
         assignment_name = request.form['name']
