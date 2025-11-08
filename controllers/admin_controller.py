@@ -19,11 +19,12 @@ def manage_students():
 def create_student():
     if request.method == 'POST':
         name = request.form['name']
+        email = request.form['email']
         born_date_string = request.form['born_date']
         born_date = datetime.strptime(born_date_string, '%Y-%m-%d').date()
         classroom_id = request.form['classroom_id']
 
-        new_student = Student(name=name, born_date=born_date, classroom_id=classroom_id)
+        new_student = Student(name=name, email=email, born_date=born_date, classroom_id=classroom_id)
         db.session.add(new_student)
         db.session.commit()
 
