@@ -59,10 +59,12 @@ def update_student(student_id):
     
     if request.method == 'POST':
         student_name = request.form['name']
+        student_email= request.form['email']
         student_born_date_string = request.form['born_date']
         student_born_date = datetime.strptime(student_born_date_string, '%Y-%m-%d').date()
 
         student.name = student_name
+        student.email = student_email
         student.born_date = student_born_date
 
         db.session.commit()
