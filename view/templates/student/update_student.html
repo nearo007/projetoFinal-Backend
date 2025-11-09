@@ -24,7 +24,7 @@
 
               <div class="mb-3">
                 <label for="born_date" class="form-label">Data de Nascimento</label>
-                <input value="{{ student_born_date }}" type="date" class="form-control" name="born_date" id="born_date" min="{{ age_range[0] }}" max="{{ age_range[1] }}" required />
+                <input value="{{ student_born_date }}" type="date" class="form-control" name="born_date" id="born_date" min="{{ age_range.0 }}" max="{{ age_range.1 }}" required />
               </div>
 
               <div class="mb-3">
@@ -40,6 +40,10 @@
                   {% endfor %}
                 </select>
               </div>
+
+              {% for category, message in get_flashed_messages(with_categories=true) %}
+                <p class="text-{{ category }} small m-0">{{ message }}</p>
+              {% endfor %}
 
               <div class="d-flex justify-content-between">
                 <a href="{{ url_for('admin_bp.manage_students') }}" class="btn btn-outline-secondary">Voltar</a>

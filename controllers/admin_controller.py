@@ -4,6 +4,7 @@ from models import Student, Classroom, Assignment, User
 from datetime import datetime
 from utils.decorators import role_required
 from utils.data_range import get_age_range
+from email_validator import validate_email, EmailNotValidError
 
 admin_bp = Blueprint('admin_bp', __name__)
 
@@ -24,6 +25,13 @@ def create_student():
         born_date_string = request.form['born_date']
         born_date = datetime.strptime(born_date_string, '%Y-%m-%d').date()
         classroom_id = request.form['classroom_id']
+        
+        try:
+            validate_email(email)
+        
+        except EmailNotValidError:
+            flash("O email inserido é inválido!", "danger")
+            return redirect(url_for("admin_bp.create_student"))
 
         new_student = Student(name=name, email=email, born_date=born_date, classroom_id=classroom_id)
         db.session.add(new_student)
@@ -63,6 +71,13 @@ def update_student(student_id):
         student_born_date = datetime.strptime(student_born_date_string, '%Y-%m-%d').date()
         student_classroom_id = request.form['classroom_id']
         student_classroom = Classroom.query.get(student_classroom_id)
+        
+        try:
+            validate_email(student_email)
+        
+        except EmailNotValidError:
+            flash("O email inserido é inválido!", "danger")
+            return redirect(url_for("admin_bp.update_student", student_id=student_id))
 
         student.name = student_name
         student.email = student_email

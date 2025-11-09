@@ -3,6 +3,7 @@ from extensions import db, bcrypt
 from models import User, Student, Classroom, Assignment
 import os
 from dotenv import load_dotenv
+from email_validator import validate_email, EmailNotValidError
 
 load_dotenv()
 
@@ -27,6 +28,13 @@ def register():
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
+        
+        try:
+            validate_email(email)
+        
+        except EmailNotValidError:
+            flash("O email inserido é inválido!", "danger")
+            return redirect(url_for("user_bp.register"))
         
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
             
