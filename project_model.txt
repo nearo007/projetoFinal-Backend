@@ -9,8 +9,6 @@ o administrador gerencia os alunos, turmas e professores, mas também tem permis
 os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que fazem parte da turma atrelada ao próprio professor.
 
 *** IMPORTANTE ***
-adicionar verificação de email
-
 adicionar lembrar senha (pode ser com localStorage())
 
 adicionar API (pode ser obter um json)
