@@ -139,10 +139,29 @@ def edit_user():
     
     return render_template("edit_user.html")
 
-@user_bp.route('/edit_password')
+@user_bp.route('/edit_password', methods=['GET', 'POST'])
 @login_required
 def edit_password():
     if request.method == 'POST':
-        pass
+        current_password = request.form['current_password']
+        new_password = request.form['new_password']
+        confirm_password = request.form['confirm_password']
+        
+        user = User.query.get(session['user_id'])
+        
+        if not bcrypt.check_password_hash(user.password, current_password):
+                flash("A senha atual inserida é incorreta!", "danger")
+                return redirect(url_for("user_bp.edit_password"))
+        
+        if new_password != confirm_password:
+            flash("As senhas não coincidem!", "danger")
+            return redirect(url_for("user_bp.edit_password"))
+        
+        password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        user.password = password_hash
+        
+        db.session.commit()
+        return redirect(url_for("user_bp.logout"))
+        
     
     return render_template("edit_password.html")
