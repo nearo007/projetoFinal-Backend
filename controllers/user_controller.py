@@ -30,6 +30,14 @@ def register():
         email = request.form['email']
         password = request.form['password']
         
+        if User.query.filter_by(name=name).first():
+            flash("Esse usuário já existe no sistema!", "danger")
+            return redirect(url_for("user_bp.register"))
+        
+        if User.query.filter_by(email=email).first():
+            flash("Esse email já está cadastrado no sistema!", "danger")
+            return redirect(url_for("user_bp.register"))
+        
         try:
             validate_email(email)
         
@@ -100,11 +108,34 @@ def logout():
     session.pop('user_role', None)
     return redirect(url_for("user_bp.index"))
 
-@user_bp.route('/edit_user')
+@user_bp.route('/edit_user', methods=['GET', 'POST'])
 @login_required
 def edit_user():
     if request.method == 'POST':
-        pass
+        user_name = request.form['name']
+        user_email = request.form['email']
+        
+        if user_name != session['user_name']:
+            if User.query.filter_by(name=user_name).first():
+                flash("Esse usuário já existe no sistema!", "danger")
+                return redirect(url_for("user_bp.edit_user"))
+        
+        if user_email != session['user_email']:
+            if User.query.filter_by(email=user_email).first():
+                flash("Esse email já está cadastrado no sistema!", "danger")
+                return redirect(url_for("user_bp.edit_user"))
+        
+        user = User.query.get(session['user_id'])
+        
+        user.name = user_name
+        user.email = user_email
+        
+        db.session.commit()
+        
+        session['user_name'] = user.name
+        session['user_email'] = user.email
+        
+        return redirect(url_for('user_bp.index'))
     
     return render_template("edit_user.html")
 
