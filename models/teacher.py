@@ -14,6 +14,8 @@ class Assignment(db.Model):
     teacher = db.relationship('User', backref='assignments')
     classroom = db.relationship('Classroom', backref='assignments')
     
+    student_assignments = db.relationship('StudentAssignment', back_populates='assignment', cascade='all, delete-orphan', passive_deletes=True)
+    
 class StudentAssignment(db.Model):
     __tablename__ = 'student_assignments'
 
@@ -23,4 +25,4 @@ class StudentAssignment(db.Model):
     grade = db.Column(db.Float, nullable=True)
 
     student = db.relationship('Student', backref='student_assignments')
-    assignment = db.relationship('Assignment', backref='student_assignments')
+    assignment = db.relationship('Assignment', back_populates='student_assignments')
