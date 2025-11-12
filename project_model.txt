@@ -14,3 +14,5 @@ adicionar lembrar senha (pode ser com localStorage())
 adicionar API (pode ser obter um json)
 
 remover flash desnecessários que stackam na tela de login
+
+verificação quando alterar a nota maxima para uma menor que obtida por aluno

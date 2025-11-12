@@ -28,7 +28,7 @@
               </div>
 
               <div class="d-flex justify-content-between">
-                <a href="{{ url_for('teacher_bp.manage_assignments') }}" class="btn btn-outline-secondary">Voltar</a>
+                <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=assignment.classroom.id) }}" class="btn btn-outline-secondary">Voltar</a>
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>
               </div>
             </form>
