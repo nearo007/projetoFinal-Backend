@@ -17,25 +17,27 @@ def manage_assignments(classroom_id):
     else:
         assignments = Assignment.query.filter_by(classroom_id=classroom_id)
 
-    return render_template("assignment/manage_assignments.html", assignments=assignments)
+    classroom = Classroom.query.get(classroom_id)
+    return render_template("assignment/manage_assignments.html", assignments=assignments, classroom=classroom)
     
-@teacher_bp.route('/create_assignment', methods=['GET', 'POST'])
+@teacher_bp.route('/create_assignment/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required
-def create_assignment():
+def create_assignment(classroom_id):
     if request.method == 'POST':
         name = request.form['name']
         grade_worth = request.form['grade_worth']
         due_date_string = request.form['due_date']
         due_date = datetime.strptime(due_date_string, '%Y-%m-%d').date()
+        teacher_id = request.form['teacher_id']
 
-        new_assignment = Assignment(name=name, grade_worth=grade_worth, due_date=due_date)
+        new_assignment = Assignment(name=name, grade_worth=grade_worth, due_date=due_date, teacher_id=teacher_id, classroom_id=classroom_id)
         db.session.add(new_assignment)
         db.session.commit()
 
-        return redirect(url_for("teacher_bp.manage_assignments"))
+        return redirect(url_for("teacher_bp.manage_assignments", classroom_id=classroom_id))
 
     data_range = get_assignment_range()
-    return render_template("assignment/create_assignment.html", data_range=data_range)
+    return render_template("assignment/create_assignment.html", classroom_id=classroom_id, data_range=data_range)
 
 @teacher_bp.route("/delete_assignment/<int:assignment_id>", methods=['GET'])
 @login_required

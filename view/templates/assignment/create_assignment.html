@@ -11,7 +11,7 @@
         <div class="card shadow-sm border-0">
           <div class="card-body">
             <h3 class="card-title text-center mb-4 fw-bold text-primary">Adicionar Tarefa</h3>
-            <form action="{{ url_for('teacher_bp.create_assignment') }}" method="post">
+            <form action="{{ url_for('teacher_bp.create_assignment', classroom_id=classroom_id) }}" method="post">
               <div class="mb-3">
                 <label for="name" class="form-label">Nome</label>
                 <input type="text" class="form-control" name="name" id="name" required />
@@ -27,8 +27,10 @@
                 <input type="date" class="form-control" name="due_date" id="due_date" min="{{ data_range[0] }}" max="{{ data_range[1] }}" required />
               </div>
 
+              <input name="teacher_id" type="hidden" value="{{ session.user_id }}">
+
               <div class="d-flex justify-content-between">
-                <a href="{{ url_for('teacher_bp.manage_assignments') }}" class="btn btn-outline-secondary">Voltar</a>
+                <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom_id) }}" class="btn btn-outline-secondary">Voltar</a>
                 <button type="submit" class="btn btn-primary">Adicionar</button>
               </div>
             </form>
