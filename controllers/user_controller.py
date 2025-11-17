@@ -1,7 +1,7 @@
-from flask import render_template, request, redirect, url_for, Blueprint, session, flash
+from flask import render_template, request, redirect, url_for, Blueprint, session, flash, make_response
 from extensions import db, bcrypt
 from models import User, Student, Classroom, Assignment
-import os
+import os, secrets
 from dotenv import load_dotenv
 from email_validator import validate_email, EmailNotValidError
 from utils.decorators import login_required
@@ -12,6 +12,20 @@ TEACHER_REGISTER_CODE = os.getenv('TEACHER_REGISTER_CODE')
 ADMIN_REGISTER_CODE = os.getenv('ADMIN_REGISTER_CODE')
 
 user_bp = Blueprint('user_bp', __name__)
+
+@user_bp.before_app_request
+def auto_login():
+    if not session.get("logged_in"):
+        token = request.cookies.get("remember_token")
+        
+        if token:
+            user = User.query.filter_by(remember_token=token).first()
+            if user:
+                session['logged_in'] = True
+                session['user_id'] = user.id
+                session['user_name'] = user.name
+                session['user_email'] = user.email
+                session['user_role'] = user.role
 
 @user_bp.route('/')
 def index():
@@ -77,6 +91,7 @@ def login():
     if request.method == 'POST':
         name = request.form['name']
         password = request.form['password']
+        remember_password = request.form.get('remember_password')
 
         user = User.query.filter_by(name=name).first()
         
@@ -90,11 +105,28 @@ def login():
             session['user_name'] = user.name
             session['user_email'] = user.email
             session['user_role'] = user.role
-
-            if session['user_role'] == 'teacher':
-                return redirect(url_for("teacher_bp.teacher_home"))
             
-            return redirect(url_for("user_bp.index"))
+            if session['user_role'] == 'teacher':
+                response = make_response(redirect(url_for("teacher_bp.teacher_home")))
+            
+            else:
+                response = make_response(redirect(url_for("user_bp.index")))
+
+            # se a pessoa marcou "lembrar"
+            if remember_password:
+                token = secrets.token_urlsafe(64)
+                user.remember_token = token
+                db.session.commit()
+
+                response.set_cookie(
+                    'remember_token',
+                    token,
+                    max_age=60*60*24*30,  # 30 dias de vida
+                    httponly=True,
+                    secure=False
+                )
+
+            return response
             
         else:
             flash("Usuário não encontrado!", "danger")
@@ -102,14 +134,25 @@ def login():
     
     return render_template("login.html")
 
+from flask import make_response, redirect, url_for
+
 @user_bp.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    session.pop('user_id', None)
-    session.pop('user_name', None)
-    session.pop('user_email', None)
-    session.pop('user_role', None)
-    return redirect(url_for("user_bp.index"))
+    user_id = session.get('user_id')
+
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
+            user.remember_token = None
+            db.session.commit()
+
+    session.clear()
+
+    resp = make_response(redirect(url_for("user_bp.login")))
+    resp.delete_cookie("remember_token")
+
+    return resp
+
 
 @user_bp.route('/edit_user', methods=['GET', 'POST'])
 @login_required
