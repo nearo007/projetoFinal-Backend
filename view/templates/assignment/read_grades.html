@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{ assignment.name }} — Notas
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 900px;">  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-primary mb-0">{{ classroom.name }}</h2>
+      {% if assignment.teacher %}
+        <small class="text-muted">Professor: {{ assignment.teacher.name }}</small>
+      {% endif %}
+    </div>
+    <div class="text-end">
+      <h3 class="fw-bold text-dark mb-1">{{ assignment.name }}</h3>
+      <p class="mb-0">
+        Valor: <strong>{{ assignment.grade_worth or 0 }}</strong> |
+        {% if assignment.due_date %}
+          Entrega: <strong>{{ assignment.due_date.strftime("%d/%m/%Y") }}</strong>
+        {% else %}
+          Entrega: <strong>Sem data</strong>
+        {% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover table-bordered align-middle bg-white mb-0">
+      <thead class="table-primary text-center">
+        <tr>
+          <th style="width: 10%">ID</th>
+          <th style="width: 40%">Aluno</th>
+          <th style="width: 25%">Email</th>
+          <th style="width: 25%">Nota</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sa in student_assignments %}
+        <tr>
+          <td class="text-center">{{ sa.student.id }}</td>
+          <td>{{ sa.student.name }}</td>
+          <td>{{ sa.student.email }}</td>
+          <td class="text-center">
+            <span class="fw-semibold">
+              {{ sa.grade if sa.grade is not none else '-' }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-start mt-4">
+    <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}"
+       class="btn btn-secondary shadow-sm">
+      <i class="bi bi-arrow-left me-2"></i> Voltar
+    </a>
+  </div>
+
+</div>
+{% endblock %}

@@ -6,7 +6,9 @@ o administrador gerencia os alunos, turmas e professores, mas também tem permis
 os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que fazem parte da turma atrelada ao próprio professor.
 
 *** IMPORTANTE ***
-download upload
+se criar a atividade antes do aluno estar atrelado a tuma ele não aparece na tela de notas (tando de avaliação do professor quanto leitura do admin)
+
+download upload (finalizado?)
 
 adicionar API (pode ser obter um json)
 

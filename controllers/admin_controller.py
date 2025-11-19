@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash
 from extensions import db
-from models import Student, Classroom, Assignment, User
+from models import Student, Classroom, Assignment, User, StudentAssignment
 from datetime import datetime
 from utils.decorators import role_required
 from utils.data_range import get_age_range
@@ -164,3 +164,12 @@ def update_classroom(classroom_id):
     
     teachers = User.query.filter_by(role='teacher').all()
     return render_template("classroom/update_classroom.html", classroom=classroom, teachers=teachers)
+
+@admin_bp.route('/read_grades/<int:assignment_id>', methods=['GET'])
+@role_required('admin')
+def read_grades(assignment_id):
+    assignment = Assignment.query.get_or_404(assignment_id)
+    classroom = assignment.classroom
+
+    student_assignments = StudentAssignment.query.filter_by(assignment_id=assignment.id).all()
+    return render_template('assignment/read_grades.html', assignment=assignment, classroom=classroom, student_assignments=student_assignments)
