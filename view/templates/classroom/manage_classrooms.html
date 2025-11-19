@@ -20,6 +20,7 @@
               <th style="width: 10%">ID</th>
               <th style="width: 30%">Nome</th>
               <th style="width: 40%">Professores</th>
+              <th style="width: 10%">Tarefas</th>
               <th style="width: 10%">Editar</th>
               <th style="width: 10%">Remover</th>
             </tr>
@@ -34,6 +35,10 @@
                   {% for teacher in classroom.teachers %}
                     {{ teacher.name }}
                   {% endfor %}
+                </td>
+
+                <td class="text-center">
+                  <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}" class="text-success" title="Editar"><i class="bi bi-bookmark-fill"></i></a>
                 </td>
 
                 <td class="text-center">

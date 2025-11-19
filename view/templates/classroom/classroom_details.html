@@ -36,9 +36,7 @@
               {% for student in classroom.students %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   {{ student.name }}
-                  <span class="badge bg-light text-secondary">
-                    {{ student.born_date.strftime('%d/%m/%Y') }}
-                  </span>
+                  <span class="badge bg-light text-secondary">{{ student.born_date.strftime('%d/%m/%Y') }}</span>
                 </li>
               {% endfor %}
             </ul>
@@ -49,14 +47,10 @@
       </div>
     </div>
 
-    <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}" class="btn btn-success d-flex align-items-center shadow-sm">
-      <i class="bi bi-pencil-square me-2"></i> Gerenciar Tarefas
-    </a>
+    <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}" class="btn btn-success d-inline-flex align-items-center mb-3"><i class="bi bi-pencil-square me-2"></i> Gerenciar Tarefas</a>
 
     <div class="d-flex justify-content-between">
-      <a href="{{ url_for('teacher_bp.teacher_home') }}" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-left me-1"></i> Voltar
-      </a>
+      <a href="{{ url_for('teacher_bp.teacher_home') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Voltar</a>
     </div>
   </div>
 {% endblock %}
