@@ -8,6 +8,11 @@ from email_validator import validate_email, EmailNotValidError
 
 admin_bp = Blueprint('admin_bp', __name__)
 
+@admin_bp.route('/admin_home', methods=['GET'])
+@role_required('admin')
+def admin_home():
+    return render_template('admin_home.html')
+
 # student
 @admin_bp.route('/manage_students', methods=['GET'])
 @role_required('admin')

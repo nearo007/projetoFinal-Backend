@@ -29,14 +29,15 @@
         {% endfor %}
 
         <div class="text-start mt-4">
-            <a href="{{ url_for('user_bp.edit_password') }}"
-                class="fw-semibold text-dark border border-1 rounded px-3 py-2 d-inline-block text-decoration-none hover-border-primary">
-                Alterar senha
-            </a>
+          <a href="{{ url_for('user_bp.edit_password') }}" class="fw-semibold text-dark border border-1 rounded px-3 py-2 d-inline-block text-decoration-none hover-border-primary">Alterar senha</a>
         </div>
-
+        
         <div class="d-grid mt-4">
           <button type="submit" class="btn btn-success fw-semibold shadow-sm"><i class="bi bi-pencil-square me-2"></i> Salvar alterações</button>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="{{ url_for('user_bp.index') }}" class="text-decoration-none fw-semibold text-dark">Voltar</a>
         </div>
       </form>
     </div>

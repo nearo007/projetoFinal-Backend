@@ -29,12 +29,14 @@ def auto_login():
 
 @user_bp.route('/')
 def index():
-    users = User.query.all()
-    students = Student.query.all()
-    classrooms = Classroom.query.all()
-    assignments = Assignment.query.all()
+    if session.get("logged_in"):
+        if session.get("user_role") == "teacher":
+            return redirect(url_for("teacher_bp.teacher_home"))
+            
+        else:
+            return redirect(url_for("admin_bp.admin_home"))
 
-    return render_template("index.html", users=users, students=students, classrooms=classrooms, assignments=assignments)
+    return render_template("index.html")
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -106,13 +108,8 @@ def login():
             session['user_email'] = user.email
             session['user_role'] = user.role
             
-            if session['user_role'] == 'teacher':
-                response = make_response(redirect(url_for("teacher_bp.teacher_home")))
-            
-            else:
-                response = make_response(redirect(url_for("user_bp.index")))
+            response = make_response(redirect(url_for("user_bp.index")))
 
-            # se a pessoa marcou "lembrar"
             if remember_password:
                 token = secrets.token_urlsafe(64)
                 user.remember_token = token
@@ -121,7 +118,7 @@ def login():
                 response.set_cookie(
                     'remember_token',
                     token,
-                    max_age=60*60*24*30,  # 30 dias de vida
+                    max_age=60*60*24*30,
                     httponly=True,
                     secure=False
                 )
@@ -133,8 +130,6 @@ def login():
             return redirect(url_for("user_bp.login"))
     
     return render_template("login.html")
-
-from flask import make_response, redirect, url_for
 
 @user_bp.route('/logout')
 def logout():
