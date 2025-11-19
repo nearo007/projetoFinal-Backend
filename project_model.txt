@@ -1,3 +1,8 @@
+ENV:
+TEACHER_REGISTER_CODE=123
+ADMIN_REGISTER_CODE=456
+
+
 MUDANÇA
 Para simplificar, aluno não terá acesso ao sistema, é um controle fechado da instituição.
 
