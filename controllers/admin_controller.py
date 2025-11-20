@@ -29,7 +29,7 @@ def create_student():
         email = request.form['email']
         born_date_string = request.form['born_date']
         born_date = datetime.strptime(born_date_string, '%Y-%m-%d').date()
-        classroom_id = request.form['classroom_id']
+        classroom_id = int(request.form['classroom_id'])
         
         try:
             validate_email(email)
@@ -40,6 +40,14 @@ def create_student():
 
         new_student = Student(name=name, email=email, born_date=born_date, classroom_id=classroom_id)
         db.session.add(new_student)
+        db.session.commit()
+        
+        classroom = Classroom.query.get(classroom_id)
+        
+        for assignment in classroom.assignments:
+            grade_entry = StudentAssignment(student_id=new_student.id, assignment_id=assignment.id, grade=0)
+            db.session.add(grade_entry)
+            
         db.session.commit()
 
         return redirect(url_for("admin_bp.manage_students"))
@@ -55,6 +63,11 @@ def delete_student(student_id):
     
     if not student:
         return redirect(url_for("admin_bp.manage_students"))
+    
+    for assignment in student.classroom.assignments:
+        for sa in assignment.student_assignments:
+            if sa.student.id == student.id:
+                db.session.delete(sa)
     
     db.session.delete(student)
     db.session.commit()

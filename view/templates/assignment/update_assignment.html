@@ -24,8 +24,12 @@
 
               <div class="mb-3">
                 <label for="due_date" class="form-label">Data de Entrega</label>
-                <input value="{{ assignment_due_date }}" type="date" class="form-control" name="due_date" id="due_date" min="{{ data_range[0] }}" max="{{ data_range[1] }}" required />
+                <input value="{{ assignment_due_date }}" type="date" class="form-control" name="due_date" id="due_date" min="{{ data_range.0 }}" max="{{ data_range.1 }}" required />
               </div>
+
+              {% for category, message in get_flashed_messages(with_categories=true) %}
+                <p class="text-{{ category }} small m-0">{{ message }}</p>
+              {% endfor %}
 
               <div class="d-flex justify-content-between">
                 <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=assignment.classroom.id) }}" class="btn btn-outline-secondary">Voltar</a>

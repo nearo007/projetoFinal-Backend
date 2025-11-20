@@ -81,7 +81,7 @@ def delete_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
     classroom = assignment.classroom
 
-    if not assignment_id:
+    if not assignment:
         return redirect(url_for("teacher_bp.manage_assignments"))
     
     db.session.delete(assignment)
@@ -101,6 +101,13 @@ def update_assignment(assignment_id):
     if request.method == 'POST':
         assignment_name = request.form['name']
         assignment_grade_worth = request.form['grade_worth']
+        
+        student_assignments = StudentAssignment.query.filter_by(assignment_id=assignment.id).all()
+        for sa in student_assignments:
+            if sa.assignment.id == assignment.id:
+                if sa.grade > float(assignment_grade_worth):
+                    flash("Algum estudante possuí uma nota que excede o limite inserido!", "danger")
+                    return redirect(url_for("teacher_bp.update_assignment", assignment_id=assignment.id))
         
         assignment_due_date_string = request.form['due_date']
         assignment_due_date = datetime.strptime(assignment_due_date_string, '%Y-%m-%d').date()

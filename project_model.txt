@@ -13,18 +13,14 @@ os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que faze
 *** IMPORTANTE ***
 se criar a atividade antes do aluno estar atrelado a tuma ele não aparece na tela de notas (tando de avaliação do professor quanto leitura do admin)
 
-download upload (finalizado?)
-
 adicionar API (pode ser obter um json)
-
-verificação quando alterar a nota maxima para uma menor que obtida por aluno
 
 3 telas antes do login
 
 FLUXO
 admin CRUD: alunos, salas e professores (falta professores)
-professor CRUD: tarefas e notas ///
 
 banco de dados
 
 remover flash desnecessários que stackam na tela de login (praticamente feito, mas verificar no final)
+download upload (finalizado?)
