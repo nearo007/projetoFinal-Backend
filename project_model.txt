@@ -14,13 +14,12 @@ se criar a atividade antes do aluno estar atrelado a tuma ele não aparece na te
 
 download upload (finalizado?)
 
-*** IMPORTANTE ***
-adicionar API (pode ser obter um json)
+admin CRUD: alunos, salas e professores (falta professores, sem editar)
 
 3 telas antes do login
 
-FLUXO
-admin CRUD: alunos, salas e professores (falta professores)
+*** IMPORTANTE ***
+adicionar API (pode ser obter um json)
 
 banco de dados
 

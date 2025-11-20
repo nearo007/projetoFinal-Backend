@@ -38,6 +38,14 @@ def index():
 
     return render_template("index.html")
 
+@user_bp.route('/webapp_functionality', methods=['GET'])
+def webapp_functionality():
+    return render_template("webapp_functionality.html")
+
+@user_bp.route('/contact', methods=['GET'])
+def contact():
+    return render_template("contact.html")
+
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
