@@ -11,7 +11,27 @@ admin_bp = Blueprint('admin_bp', __name__)
 @admin_bp.route('/admin_home', methods=['GET'])
 @role_required('admin')
 def admin_home():
-    return render_template('admin_home.html')
+    return render_template('admin/admin_home.html')
+
+@admin_bp.route('/manage_teachers', methods=['GET'])
+@role_required('admin')
+def manage_teachers():
+    teachers = User.query.filter_by(role='teacher')
+    
+    return render_template("admin/manage_teachers.html", teachers=teachers)
+
+@admin_bp.route('/delete_teacher/<int:teacher_id>', methods=['GET'])
+@role_required('admin')
+def delete_teacher(teacher_id):
+    teacher = User.query.get(teacher_id)
+    
+    if not teacher:
+        return redirect(url_for("admin_bp.manage_teachers"))
+    
+    db.session.delete(teacher)
+    db.session.commit()
+    
+    return redirect(url_for("admin_bp.manage_teachers"))
 
 # student
 @admin_bp.route('/manage_students', methods=['GET'])

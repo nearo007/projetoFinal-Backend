@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Lista de Professores
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5" style="max-width: 1000px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="fw-bold text-primary m-0">Lista de Professores</h1>
+      <a href="{{ url_for('user_bp.index') }}" class="btn btn-outline-secondary">Voltar</a>
+    </div>
+
+    {% if teachers %}
+      <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover table-bordered align-middle bg-white mb-0">
+          <thead class="table-primary text-center">
+            <tr>
+              <th style="width: 10%">ID</th>
+              <th style="width: 30%">Nome</th>
+              <th style="width: 40%">Email</th>
+              <th style="width: 10%">Remover</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for teacher in teachers %}
+              <tr>
+                <td class="text-center">{{ teacher.id }}</td>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.email }}</td>
+
+                <td class="text-center">
+                  <a href="{{ url_for('admin_bp.delete_teacher', teacher_id=teacher.id) }}" onclick="return confirm('Tem certeza que deseja remover {{ teacher.name }}? Esta ação não pode ser desfeita.');" class="text-danger" title="Remover"><i class="bi bi-trash-fill"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="alert alert-warning text-center shadow-sm mt-4">Nenhum professor cadastrada ainda.</div>
+    {% endif %}
+  </div>
+{% endblock %}

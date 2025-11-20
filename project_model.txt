@@ -10,9 +10,11 @@ o administrador gerencia os alunos, turmas e professores, mas também tem permis
 
 os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que fazem parte da turma atrelada ao próprio professor.
 
-*** IMPORTANTE ***
 se criar a atividade antes do aluno estar atrelado a tuma ele não aparece na tela de notas (tando de avaliação do professor quanto leitura do admin)
 
+download upload (finalizado?)
+
+*** IMPORTANTE ***
 adicionar API (pode ser obter um json)
 
 3 telas antes do login
@@ -23,4 +25,3 @@ admin CRUD: alunos, salas e professores (falta professores)
 banco de dados
 
 remover flash desnecessários que stackam na tela de login (praticamente feito, mas verificar no final)
-download upload (finalizado?)

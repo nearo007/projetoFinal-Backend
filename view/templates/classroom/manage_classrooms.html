@@ -38,7 +38,7 @@
                 </td>
 
                 <td class="text-center">
-                  <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}" class="text-success" title="Editar"><i class="bi bi-bookmark-fill"></i></a>
+                  <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}" class="text-success" title="Tarefas"><i class="bi bi-bookmark-fill"></i></a>
                 </td>
 
                 <td class="text-center">
@@ -54,7 +54,7 @@
         </table>
       </div>
     {% else %}
-      <div class="alert alert-warning text-center shadow-sm mt-4">Nenhuma Turma cadastrada ainda.</div>
+      <div class="alert alert-warning text-center shadow-sm mt-4">Nenhuma turma cadastrada ainda.</div>
     {% endif %}
   </div>
 {% endblock %}
