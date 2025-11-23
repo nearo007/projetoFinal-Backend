@@ -150,33 +150,28 @@ def update_student(student_id):
 def admin_student_details(student_id):
     student = Student.query.get_or_404(student_id)
 
-    # Agrupar tarefas por professor
-    tasks_by_teacher = {}
+    assignments_by_teacher = {}
     for sa in student.student_assignments:
         teacher = sa.assignment.teacher
-        if teacher not in tasks_by_teacher:
-            tasks_by_teacher[teacher] = []
-        tasks_by_teacher[teacher].append(sa)
+        if teacher not in assignments_by_teacher:
+            assignments_by_teacher[teacher] = []
+        assignments_by_teacher[teacher].append(sa)
 
-    # Cálculo da média geral
-    total_grade = 0
-    count = 0
+    teacher_avgs = {}
+    for teacher, assignments in assignments_by_teacher.items():
+        total = 0
+        count = 0
 
-    for sa in student.student_assignments:
-        if sa.assignment.grade_worth and sa.assignment.grade_worth > 0:
-            grade = sa.grade if sa.grade is not None else 0
-            grade_ratio = (grade / sa.assignment.grade_worth) * 10
-            total_grade += grade_ratio
-            count += 1
+        for sa in assignments:
+            if sa.assignment.grade_worth and sa.assignment.grade_worth > 0:
+                grade = sa.grade if sa.grade is not None else 0
+                ratio = (grade / sa.assignment.grade_worth) * 10
+                total += ratio
+                count += 1
 
-    final_avg = round(total_grade / count, 10) if count > 0 else None
+        teacher_avgs[teacher] = round(total / count, 1) if count > 0 else None
 
-    return render_template(
-        "student/admin_student_details.html",
-        student=student,
-        tasks_by_teacher=tasks_by_teacher,
-        final_avg=final_avg
-    )
+    return render_template("student/admin_student_details.html", student=student, assignments_by_teacher=assignments_by_teacher, teacher_avgs=teacher_avgs)
 
 # classroom
 @admin_bp.route('/manage_classrooms', methods=['GET'])
