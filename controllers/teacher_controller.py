@@ -39,6 +39,37 @@ def manage_assignments(classroom_id):
     classroom = Classroom.query.get(classroom_id)
     return render_template("assignment/manage_assignments.html", assignments=assignments, classroom=classroom)
     
+@teacher_bp.route('/student_details/<int:student_id>', methods=['GET'])
+def student_details(student_id):
+    student = Student.query.get_or_404(student_id)
+    
+    teacher_id = session.get('user_id')
+    
+    student_assignments = [
+        sa for sa in student.student_assignments
+        if sa.assignment.teacher_id == teacher_id
+    ]
+    
+    if student_assignments:
+        total_grade = 0
+        count = 0
+        
+        for sa in student_assignments:
+            if sa.assignment.grade_worth is not None and sa.assignment.grade_worth > 0:
+                grade = sa.grade if sa.grade is not None else 0
+                grade_ratio = (grade / sa.assignment.grade_worth) * 10
+                total_grade += grade_ratio
+                count += 1
+        
+        if count > 0:
+            final_avg = round(total_grade / count, 10)
+        else:
+            None
+    else:
+        final_avg = None
+    
+    return render_template("student/student_details.html", student=student, final_avg=final_avg)
+
 @teacher_bp.route('/create_assignment/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required
 def create_assignment(classroom_id):

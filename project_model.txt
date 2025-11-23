@@ -20,7 +20,13 @@ admin CRUD: alunos, salas e professores (falta professores, sem editar)
 
 remover flash desnecessários que stackam na tela de login (praticamente feito, mas verificar no final)
 
-*** IMPORTANTE ***
 adicionar API (pode ser obter um json)
+
+*** IMPORTANTE ***
+adicionar tela, onde o professor pode ver detalhes de um aluno (todas as atividades e com a nota, e a soma final)
+
+quando altera o aluno pra outra sala precisa zerar a relação student assignments
+
+botao voltar no classroom deve mudar destino se for admin
 
 banco de dados

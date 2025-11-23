@@ -9,13 +9,12 @@
     <div class="text-center mb-5">
       <i class="bi bi-journal-bookmark-fill text-primary" style="font-size: 3rem;"></i>
       <h2 class="fw-bold mt-3">Detalhes da Turma</h2>
-      <p class="text-muted mb-0">Informações sobre a turma e seus participantes</p>
+      <p class="text-muted mb-0">Informações estruturadas da turma</p>
     </div>
 
     <div class="card shadow-sm border-0 mb-4">
       <div class="card-body">
-        <h4 class="fw-semibold text-primary mb-3">{{ classroom.name }}</h4>
-
+        <h4 class="fw-semibold text-primary mb-4">{{ classroom.name }}</h4>
         <div class="mb-4">
           <h5 class="fw-semibold text-secondary mb-3"><i class="bi bi-person-vcard me-2"></i>Professores</h5>
           {% if classroom.teachers %}
@@ -29,21 +28,37 @@
           {% endif %}
         </div>
 
-        <div>
-          <h5 class="fw-semibold text-secondary mb-3"><i class="bi bi-people-fill me-2"></i>Alunos</h5>
-          {% if classroom.students %}
-            <ul class="list-group list-group-flush">
+        <h5 class="fw-semibold text-secondary mb-3"><i class="bi bi-people-fill me-2"></i>Alunos</h5>
+        <table class="table table-hover table-bordered align-middle bg-white mb-0">
+          <thead class="table-primary text-center">
+            <tr>
+              <th style="width: 5%;">ID</th>
+              <th style="width: 20%;">Nome</th>
+              <th style="width: 20%;">Email</th>
+              <th style="width: 15%;">Nascimento</th>
+              <th style="width: 10%;">Desempenho</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if classroom.students %}
               {% for student in classroom.students %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  {{ student.name }}
-                  <span class="badge bg-light text-secondary">{{ student.born_date.strftime('%d/%m/%Y') }}</span>
-                </li>
+                <tr>
+                  <td class="text-center">{{ student.id }}</td>
+                  <td>{{ student.name }}</td>
+                  <td class="text-center">{{ student.email }}</td>
+                  <td class="text-center">{{ student.born_date.strftime('%d/%m/%Y') }}</td>
+                  <td class="text-center">
+                    <a href="{{ url_for('teacher_bp.student_details', student_id=student.id) }}" class="text-primary" title="Desempenho"><i class="bi bi-bar-chart-fill"></i></a>
+                  </td>
+                </tr>
               {% endfor %}
-            </ul>
-          {% else %}
-            <p class="text-muted">Nenhum aluno cadastrado nesta turma.</p>
-          {% endif %}
-        </div>
+            {% else %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">Nenhum aluno cadastrado nesta turma.</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
       </div>
     </div>
 

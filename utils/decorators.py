@@ -12,7 +12,6 @@ def login_required(f):
     return decorated_function
 
 def role_required(*roles):
-    #@role_required('admin', 'teacher')
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
