@@ -18,9 +18,9 @@ admin CRUD: alunos, salas e professores (falta professores, sem editar)
 
 3 telas antes do login
 
+remover flash desnecessários que stackam na tela de login (praticamente feito, mas verificar no final)
+
 *** IMPORTANTE ***
 adicionar API (pode ser obter um json)
 
 banco de dados
-
-remover flash desnecessários que stackam na tela de login (praticamente feito, mas verificar no final)
