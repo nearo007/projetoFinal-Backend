@@ -39,8 +39,8 @@ def manage_assignments(classroom_id):
     classroom = Classroom.query.get(classroom_id)
     return render_template("assignment/manage_assignments.html", assignments=assignments, classroom=classroom)
     
-@teacher_bp.route('/student_details/<int:student_id>', methods=['GET'])
-def student_details(student_id):
+@teacher_bp.route('/teacher_student_details/<int:student_id>', methods=['GET'])
+def teacher_student_details(student_id):
     student = Student.query.get_or_404(student_id)
     
     teacher_id = session.get('user_id')
@@ -68,7 +68,7 @@ def student_details(student_id):
     else:
         final_avg = None
     
-    return render_template("student/student_details.html", student=student, final_avg=final_avg)
+    return render_template("student/teacher_student_details.html", student=student, student_assignments=student_assignments, final_avg=final_avg)
 
 @teacher_bp.route('/create_assignment/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required

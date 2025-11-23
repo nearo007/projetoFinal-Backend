@@ -48,7 +48,7 @@
                   <td class="text-center">{{ student.email }}</td>
                   <td class="text-center">{{ student.born_date.strftime('%d/%m/%Y') }}</td>
                   <td class="text-center">
-                    <a href="{{ url_for('teacher_bp.student_details', student_id=student.id) }}" class="text-primary" title="Desempenho"><i class="bi bi-bar-chart-fill"></i></a>
+                    <a href="{{ url_for('teacher_bp.teacher_student_details', student_id=student.id) }}" class="text-primary" title="Desempenho"><i class="bi bi-bar-chart-fill"></i></a>
                   </td>
                 </tr>
               {% endfor %}

@@ -43,7 +43,7 @@
                   {% endfor %}
                 </td>
                 <td class="text-center">
-                  <a href="{{ url_for('teacher_bp.student_details', student_id=student.id) }}" class="text-primary" title="Desempenho"><i class="bi bi-bar-chart-fill"></i></a>
+                  <a href="{{ url_for('admin_bp.admin_student_details', student_id=student.id) }}" class="text-primary" title="Desempenho"><i class="bi bi-bar-chart-fill"></i></a>
                 </td>
                 <td class="text-center">
                   <a href="{{ url_for('admin_bp.update_student', student_id=student.id) }}" class="text-primary" title="Editar"><i class="bi bi-pencil-fill"></i></a>

@@ -146,6 +146,38 @@ def update_student(student_id):
     age_range = get_age_range()
     return render_template("student/update_student.html", student=student, student_born_date=student_born_date, classrooms=classrooms, age_range=age_range)
 
+@admin_bp.route('/admin_student_details/<int:student_id>', methods=['GET'])
+def admin_student_details(student_id):
+    student = Student.query.get_or_404(student_id)
+
+    # Agrupar tarefas por professor
+    tasks_by_teacher = {}
+    for sa in student.student_assignments:
+        teacher = sa.assignment.teacher
+        if teacher not in tasks_by_teacher:
+            tasks_by_teacher[teacher] = []
+        tasks_by_teacher[teacher].append(sa)
+
+    # Cálculo da média geral
+    total_grade = 0
+    count = 0
+
+    for sa in student.student_assignments:
+        if sa.assignment.grade_worth and sa.assignment.grade_worth > 0:
+            grade = sa.grade if sa.grade is not None else 0
+            grade_ratio = (grade / sa.assignment.grade_worth) * 10
+            total_grade += grade_ratio
+            count += 1
+
+    final_avg = round(total_grade / count, 10) if count > 0 else None
+
+    return render_template(
+        "student/admin_student_details.html",
+        student=student,
+        tasks_by_teacher=tasks_by_teacher,
+        final_avg=final_avg
+    )
+
 # classroom
 @admin_bp.route('/manage_classrooms', methods=['GET'])
 @role_required('admin')

@@ -55,8 +55,8 @@
             </tr>
           </thead>
           <tbody>
-            {% if student.student_assignments %}
-              {% for sa in student.student_assignments %}
+            {% if student_assignments %}
+              {% for sa in student_assignments %}
                 <tr>
                   <td class="text-center">{{ sa.assignment.id }}</td>
                   <td>{{ sa.assignment.name }}</td>
