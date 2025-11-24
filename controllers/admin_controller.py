@@ -24,7 +24,7 @@ def manage_teachers():
 @admin_bp.route('/delete_teacher/<int:teacher_id>', methods=['GET'])
 @role_required('admin')
 def delete_teacher(teacher_id):
-    teacher = User.query.get(teacher_id)
+    teacher = User.query.get_or_404(teacher_id)
     
     if not teacher:
         return redirect(url_for("admin_bp.manage_teachers"))
@@ -80,7 +80,7 @@ def create_student():
 @admin_bp.route('/delete_student/<int:student_id>', methods=['GET'])
 @role_required('admin')
 def delete_student(student_id):
-    student = Student.query.get(student_id)
+    student = Student.query.get_or_404(student_id)
     
     if not student:
         return redirect(url_for("admin_bp.manage_students"))
@@ -98,7 +98,7 @@ def delete_student(student_id):
 @admin_bp.route('/update_student/<int:student_id>', methods=['GET', 'POST'])
 @role_required('admin')
 def update_student(student_id):
-    student = Student.query.get(student_id)
+    student = Student.query.get_or_404(student_id)
     
     if not student:
         return redirect(url_for("admin_bp.manage_students"))
@@ -207,7 +207,7 @@ def create_classroom():
 @admin_bp.route("/delete_classroom/<int:classroom_id>", methods=['GET'])
 @role_required('admin')
 def delete_classroom(classroom_id):
-    classroom = Classroom.query.get(classroom_id)
+    classroom = Classroom.query.get_or_404(classroom_id)
 
     if not classroom:
         return redirect(url_for("admin_bp.manage_classrooms"))
@@ -232,7 +232,7 @@ def delete_classroom(classroom_id):
 @admin_bp.route('/update_classroom/<int:classroom_id>', methods=['GET', 'POST'])
 @role_required('admin')
 def update_classroom(classroom_id):
-    classroom = Classroom.query.get(classroom_id)
+    classroom = Classroom.query.get_or_404(classroom_id)
     
     if not classroom:
         return redirect(url_for("admin_bp.manage_classrooms"))

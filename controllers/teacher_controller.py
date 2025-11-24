@@ -112,7 +112,7 @@ def download_file(filename):
 @teacher_bp.route("/delete_assignment/<int:assignment_id>", methods=['GET'])
 @login_required
 def delete_assignment(assignment_id):
-    assignment = Assignment.query.get(assignment_id)
+    assignment = Assignment.query.get_or_404(assignment_id)
 
     if not assignment:
         return redirect(url_for("teacher_bp.manage_assignments"))
@@ -127,7 +127,7 @@ def delete_assignment(assignment_id):
 @teacher_bp.route("/update_assignment/<int:assignment_id>", methods=['GET', 'POST'])
 @login_required
 def update_assignment(assignment_id):
-    assignment = Assignment.query.get(assignment_id)
+    assignment = Assignment.query.get_or_404(assignment_id)
     classroom = assignment.classroom
 
     if not assignment:
