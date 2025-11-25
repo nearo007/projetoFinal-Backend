@@ -51,6 +51,10 @@ def create_student():
         born_date = datetime.strptime(born_date_string, '%Y-%m-%d').date()
         classroom_id = int(request.form['classroom_id'])
         
+        if Student.query.filter_by(email=email).first():
+            flash("Esse email já está cadastrado no sistema!", "danger")
+            return redirect(url_for("admin_bp.create_student"))
+        
         try:
             validate_email(email)
         
